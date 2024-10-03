@@ -1797,12 +1797,20 @@ class Gradeable extends AbstractModel {
     }
 
     /**
+     * Gets if this gradeable has been accessed by any students yet
+     * @return bool
+     */
+    public function anyAccesses() {
+        return $this->core->getQueries()->getHasBeenAccessed($this->getId());
+    }
+
+    /**
      * Used to decide whether a gradeable can be deleted or not.
      * This means: No submissions, No manual grades entered, No teams formed, and No VCS repos created
      * @return bool True if the gradeable can be deleted
      */
     public function canDelete() {
-        return !$this->anySubmissions() && !$this->anyManualGrades() && !$this->anyTeams() && !($this->isVcs() && !$this->isTeamAssignment());
+        return !$this->anyAccesses() && !$this->anySubmissions() && !$this->anyManualGrades() && !$this->anyTeams() && !($this->isVcs() && !$this->isTeamAssignment());
     }
 
     /**
