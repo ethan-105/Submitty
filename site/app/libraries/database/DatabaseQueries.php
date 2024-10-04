@@ -7801,7 +7801,8 @@ AND gc_id IN (
      */
     public function getHasBeenAccessed($gradeable_id): bool {
         $this->course_db->query(
-            'SELECT EXISTS (SELECT 1 FROM gradeable_access WHERE g_id=?)', [$gradeable_id]
+            'SELECT EXISTS (SELECT 1 FROM gradeable_access WHERE g_id=?)', 
+            [$gradeable_id]
         );
         return $this->course_db->row()['exists'];
     }
